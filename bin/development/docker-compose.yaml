@@ -1,0 +1,68 @@
+services:
+  starter-example:
+    tty: true
+    container_name: starter-example
+    image: starter-example
+    depends_on:
+      starter-postgres:
+        condition: service_healthy
+      starter-valkey:
+        condition: service_healthy
+    build:
+      context: ../../
+      dockerfile: bin/development/Dockerfile
+    networks:
+      - starter
+
+  starter-postgres:
+    tty: true
+    container_name: starter-postgres
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: starter
+      POSTGRES_USER: starter
+      POSTGRES_PASSWORD: starter
+    ports:
+      - "5432:5432"
+    volumes:
+      - starter_postgres_data:/var/lib/postgresql/data
+    networks:
+      - starter
+
+  starter-valkey:
+    tty: true
+    image: valkey/valkey:8.1.1-alpine
+    container_name: starter-valkey
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - starter_valkey_data:/data
+    networks:
+      - starter
+
+  starter-caddy:
+    image: caddy:2.10.0-alpine
+    tty: true
+    container_name: starter-caddy
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - starter_caddy_data:/data
+      - starter_caddy_config:/config
+    networks:
+      - starter
+
+volumes:
+  starter_postgres_data:
+  starter_valkey_data:
+  starter_caddy_data:
+  starter_caddy_config:
+
+networks:
+  starter:
+    name: starter

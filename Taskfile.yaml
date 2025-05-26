@@ -1,0 +1,24 @@
+version: '3'
+
+tasks:
+  dev-assets:
+    cmds:
+      - reflex -r '(\.go$|\.css$|\.js$|\.ts$)' -G 'public/static/dist/**' -s bun run ./public/esbuild.config.ts
+
+  dev-tilt-up:
+    cmds:
+      - tilt up -f bin/development/Tiltfile
+
+  dev-tilt-down:
+    cmds:
+      - tilt down -f bin/development/Tiltfile
+
+  up:
+    deps:
+      - dev-assets
+      - dev-tilt-up
+
+  down:
+    deps:
+      - dev-tilt-down
+

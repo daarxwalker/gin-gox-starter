@@ -1,0 +1,6 @@
+localhost {
+	handle {
+		reverse_proxy starter-example:8000
+	}
+	tls internal
+}
