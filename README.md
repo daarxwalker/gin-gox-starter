@@ -1,4 +1,4 @@
-# Go Templ Starter
+# Go Gin Gox Starter
 
 ## Install Go
 
@@ -40,4 +40,4 @@ Must be in root of project
 task up
 ```
 
-The project's running on https://localhost, now.
+The project's running on https://localhost.
