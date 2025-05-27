@@ -10,6 +10,7 @@ import (
 
 func Layout(c context.Context, children ...Node) Node {
 	return Html(
+		Data(Name("theme"), Value("light")),
 		Head(
 			Title(Text(facade.Page(c).GetTitle())),
 			Link(
@@ -27,6 +28,7 @@ func Layout(c context.Context, children ...Node) Node {
 			),
 		),
 		Body(
+			Class("text-slate-900"),
 			Fragment(children...),
 		),
 	)

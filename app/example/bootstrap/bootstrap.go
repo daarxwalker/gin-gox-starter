@@ -12,7 +12,7 @@ import (
 	"common/pkg/service/cache_service"
 	"common/pkg/service/database_service"
 	"common/pkg/service/page_service"
-	"example/internal/presentation/home_presenter"
+	"example/internal/presentation/example_presenter"
 )
 
 func Boot() error {
@@ -54,6 +54,6 @@ func Boot() error {
 	}
 	app.Use(middleware.Assets(cfg))
 	app.Use(middleware.ErrorHandler())
-	home_presenter.Register(app)
+	example_presenter.Register(app)
 	return app.Run("0.0.0.0:" + os.Getenv("APP_PORT"))
 }
